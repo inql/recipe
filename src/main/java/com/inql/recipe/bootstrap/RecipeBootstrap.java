@@ -4,6 +4,7 @@ import com.inql.recipe.domain.*;
 import com.inql.recipe.repositories.CategoryRepository;
 import com.inql.recipe.repositories.RecipeRepository;
 import com.inql.recipe.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent>{
 
@@ -27,6 +29,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         recipeRepository.saveAll(getRecipes());
+        log.debug("I'm in bootstrap class!");
     }
 
     private List<Recipe> getRecipes(){
@@ -124,14 +127,14 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         guacNotes.setRecipe(guacRecipe);
         guacNotes.setRecipe(guacRecipe);
         guacRecipe.setNotes(guacNotes);
-        guacRecipe.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2),eachUom,guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal(".5"),teapoonUom,guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(1),tableSpoonUom,guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2),tableSpoonUom,guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2),eachUom,guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("cilantro (leaves and tender stems), finely chopped", new BigDecimal(2),tableSpoonUom,guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("freshly grated black pepper", new BigDecimal(1),dashUom,guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(".5"),eachUom,guacRecipe));
+        guacRecipe.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2),eachUom));
+        guacRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal(".5"),teapoonUom));
+        guacRecipe.addIngredient(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(1),tableSpoonUom));
+        guacRecipe.addIngredient(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2),tableSpoonUom));
+        guacRecipe.addIngredient(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2),eachUom));
+        guacRecipe.addIngredient(new Ingredient("cilantro (leaves and tender stems), finely chopped", new BigDecimal(2),tableSpoonUom));
+        guacRecipe.addIngredient(new Ingredient("freshly grated black pepper", new BigDecimal(1),dashUom));
+        guacRecipe.addIngredient(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(".5"),eachUom));
 
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
@@ -161,9 +164,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacoNotes.setRecipe(tacoRecipe);
         tacoNotes.setRecipeNotes("Look for ancho chile powder with the Mexican ingredients at your grocery store, on buy it online. (If you can't find ancho chili powder, you replace the ancho chili, the oregano, and the cumin with 2 1/2 tablespoons regular chili powder, though the flavor won't be quite the same.)");
         tacoRecipe.setNotes(tacoNotes);
-        tacoRecipe.getIngredients().add(new Ingredient("ancho chilli powder",new BigDecimal(2),tableSpoonUom,tacoRecipe));
-        tacoRecipe.getIngredients().add(new Ingredient("packed baby arugula",new BigDecimal(3),cupsUom,tacoRecipe));
-        tacoRecipe.getIngredients().add(new Ingredient("ripe avocados, sliced",new BigDecimal(2),eachUom,tacoRecipe));
+        tacoRecipe.addIngredient(new Ingredient("ancho chilli powder",new BigDecimal(2),tableSpoonUom));
+        tacoRecipe.addIngredient(new Ingredient("packed baby arugula",new BigDecimal(3),cupsUom));
+        tacoRecipe.addIngredient(new Ingredient("ripe avocados, sliced",new BigDecimal(2),eachUom));
         recipes.add(guacRecipe);
         recipes.add(tacoRecipe);
 
